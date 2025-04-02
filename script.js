@@ -1,54 +1,54 @@
 const placesData = {
   sports: [
-    { name: 'Парк для скейтбординга', description: 'Отличное место для любителей скейтбординга и BMX.' },
-    { name: 'Спортивный комплекс', description: 'Здесь проходят соревнования по баскетболу и волейболу.' }
+    { name: 'Skeittipuisto', description: 'Erinomainen paikka skeittauksen ja BMX:n harrastajille.' },
+    { name: 'Urheilukeskus', description: 'Täällä pidetään koripallon ja lentopallon kilpailuja.' }
   ],
   food: [
-    { name: 'Ресторан итальянской кухни', description: 'Лучшие пасты и пиццы в городе.' },
-    { name: 'Кафе с десертами', description: 'Идеально для тех, кто любит сладкое.' }
+    { name: 'Italialainen ravintola', description: 'Parhaat pastat ja pizzat kaupungissa.' },
+    { name: 'Kahvila, jossa on jälkiruokia', description: 'Täydellinen paikka makean ystäville.' }
   ],
   culture: [
-    { name: 'Музей искусств', description: 'Музей с постоянной экспозицией картин великих художников.' },
-    { name: 'Театр', description: 'Место для наслаждения драматическими и музыкальными постановками.' }
+    { name: 'Taidemuseo', description: 'Museo, jossa on pysyvä taidenäyttely suurten taiteilijoiden maalauksista.' },
+    { name: 'Teatteri', description: 'Paikka nauttia draama- ja musiikkiesityksistä.' }
   ]
 };
 
 function showPlaces(category) {
-  // Скрыть все вкладки
+  // Piilota kaikki välilehdet
   const buttons = document.querySelectorAll('.tab-button');
   buttons.forEach(button => {
     button.style.display = 'none';
   });
 
-  // Показать только выбранную вкладку и список мест
+  // Näytä vain valittu välilehti ja paikkojen lista
   const placesList = document.getElementById('places-list');
   const placesListContainer = document.getElementById('places-list-container');
-  placesList.innerHTML = ''; // Очистить список
+  placesList.innerHTML = ''; // Tyhjennä lista
 
-  // Получаем данные для выбранной категории
+  // Hae valitun kategorian tiedot
   const places = placesData[category];
 
-  // Добавляем каждый элемент в список
+  // Lisää jokainen paikka listalle
   places.forEach(place => {
     const li = document.createElement('li');
     li.innerHTML = `<strong>${place.name}</strong>: ${place.description}`;
     placesList.appendChild(li);
   });
 
-  // Показываем заголовок "Места" и список
+  // Näytä otsikko "Paikat" ja lista
   placesListContainer.style.display = 'block';
 
-  // Показываем кнопку "Назад"
+  // Näytä "Takaisin"-nappi
   document.getElementById('back-button').style.display = 'block';
 }
 
 function goBack() {
-  // Очистить список и скрыть кнопку "Назад"
+  // Tyhjennä lista ja piilota "Takaisin"-nappi
   document.getElementById('places-list').innerHTML = '';
   document.getElementById('places-list-container').style.display = 'none';
   document.getElementById('back-button').style.display = 'none';
 
-  // Показать снова все вкладки
+  // Näytä taas kaikki välilehdet
   const buttons = document.querySelectorAll('.tab-button');
   buttons.forEach(button => {
     button.style.display = 'inline-block';
