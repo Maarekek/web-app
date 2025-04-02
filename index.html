@@ -1,50 +1,25 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verkkosovellus</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Библиотека интересных мест</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Verkkosovellus</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Koti</a></li>
-                <li><a href="#about">Tietoa</a></li>
-                <li><a href="#contact">Yhteystiedot</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main id="content">
-        <p>Tervetuloa! Lisää sisältöä tähän kiitos!.</p>
-    </main>
-
-    <div class="container">
-        <h1>Библиотека интересных мест</h1>
-        
-        <!-- Кнопки-вкладки -->
-        <div class="tabs" id="tabs">
-            <button class="tab-button" onclick="showPlaces('sports')">Активные виды спорта</button>
-            <button class="tab-button" onclick="showPlaces('food')">Рестораны и кафе</button>
-            <button class="tab-button" onclick="showPlaces('culture')">Культура и искусство</button>
-        </div>
-
-        <!-- Контент для показа -->
-        <div id="places-list-container">
-            <h2>Места:</h2>
-            <ul id="places-list"></ul>
-        </div>
-        
-        <!-- Кнопка назад -->
-        <button id="back-button" onclick="goBack()" style="display: none;">Назад</button>
+  <div class="container">
+    <h1>Библиотека интересных мест</h1>
+    
+    <!-- Кнопки-вкладки -->
+    <div class="tabs" id="tabs">
+      <button class="tab-button" onclick="showPlaces('sports')">Активные виды спорта</button>
+      <button class="tab-button" onclick="showPlaces('food')">Рестораны и кафе</button>
+      <button class="tab-button" onclick="showPlaces('culture')">Культура и искусство</button>
     </div>
 
     <!-- Контент для показа -->
-    <div id="content">
-      <h2>Mest:</h2>
+    <div id="places-list-container" style="display: none;">
+      <h2>Места:</h2>
       <ul id="places-list"></ul>
     </div>
     
@@ -52,6 +27,6 @@
     <button id="back-button" onclick="goBack()" style="display: none;">Назад</button>
   </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
