@@ -1,32 +1,136 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="fi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Библиотека интересных мест</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vapaa-ajan valinta</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>Vapaa-ajan valinta</h1>
-    
-    <!-- Кнопки-вкладки -->
-    <div class="tabs" id="tabs">
-      <button class="tab-button" onclick="showPlaces('sports')">Активные виды спорта</button>
+
+    <div class="tabs">
+      <button class="tab-button" onclick="showPlaces('sports')">Aktiivista urheilua</button>
       <button class="tab-button" onclick="showPlaces('food')">Ravintolat ja kahvilat</button>
       <button class="tab-button" onclick="showPlaces('culture')">Kulttuuri ja taide</button>
     </div>
 
-    <!-- Контент для показа -->
     <div id="places-list-container" style="display: none;">
-      <h2>Места:</h2>
+      <h2>Paikat:</h2>
       <ul id="places-list"></ul>
     </div>
-    
-    <!-- Кнопка назад -->
-    <button id="back-button" onclick="goBack()" style="display: none;">Takana</button>
+
+    <button id="back-button" onclick="goBack()" style="display: none;">Takaisin</button>
+    <div id="map" style="display: none;"></div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    const placesData = {
+      sports: [
+        {
+          name: 'Skeittipuisto',
+          description: 'Erinomainen paikka skeittaukseen ja BMX:ään.',
+          coords: [60.192059, 24.945831],
+          images: ['images/skeittipuisto1.jpg', 'images/skeittipuisto2.jpg']
+        },
+        {
+          name: 'Urheilukeskus',
+          description: 'Koripallo ja lentopallo tapahtumia.',
+          coords: [60.185, 24.95],
+          images: ['images/urheilukeskus1.jpg', 'images/urheilukeskus2.jpg']
+        }
+      ],
+      food: [
+        {
+          name: 'Italialainen ravintola',
+          description: 'Parhaat pastat ja pizzat kaupungissa.',
+          coords: [60.17, 24.94],
+          images: ['images/italian1.jpg', 'images/italian2.jpg']
+        },
+        {
+          name: 'Kahvila jälkiruoilla',
+          description: 'Täydellinen paikka makean ystäville.',
+          coords: [60.175, 24.93],
+          images: ['images/cafe1.jpg', 'images/cafe2.jpg']
+        }
+      ],
+      culture: [
+        {
+          name: 'Taidemuseo',
+          description: 'Pysyvä näyttely taidemaalauksista.',
+          coords: [60.18, 24.95],
+          images: ['images/museum1.jpg', 'images/museum2.jpg']
+        },
+        {
+          name: 'Teatteri',
+          description: 'Draama- ja musiikkiesityksiä.',
+          coords: [60.177, 24.96],
+          images: ['images/theater1.jpg', 'images/theater2.jpg']
+        }
+      ]
+    };
+
+    const map = L.map('map').setView([60.1699, 24.9384], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let currentMarkers = [];
+
+    function showPlaces(category) {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.style.display = 'none');
+
+      const list = document.getElementById('places-list');
+      const container = document.getElementById('places-list-container');
+      const places = placesData[category];
+
+      list.innerHTML = '';
+      container.style.display = 'block';
+      document.getElementById('back-button').style.display = 'inline-block';
+      document.getElementById('map').style.display = 'block';
+
+      currentMarkers.forEach(marker => map.removeLayer(marker));
+      currentMarkers = [];
+
+      places.forEach(place => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${place.name}</strong><br>${place.description}`;
+        list.appendChild(li);
+
+        let popupContent = `<strong>${place.name}</strong><br>${place.description}<br><br>`;
+        place.images.forEach(img => {
+          popupContent += `<img src="${img}" alt="${place.name}" style="width:100%; border-radius: 8px; margin-bottom: 10px;">`;
+        });
+
+        const marker = L.marker(place.coords).addTo(map)
+          .bindPopup(popupContent);
+        currentMarkers.push(marker);
+      });
+
+      if (places.length && places[0].coords) {
+        map.setView(places[0].coords, 13);
+        setTimeout(() => map.invalidateSize(), 300);
+      }
+    }
+
+    function goBack() {
+      document.getElementById('places-list').innerHTML = '';
+      document.getElementById('places-list-container').style.display = 'none';
+      document.getElementById('back-button').style.display = 'none';
+      document.getElementById('map').style.display = 'none';
+
+      currentMarkers.forEach(marker => map.removeLayer(marker));
+      currentMarkers = [];
+
+      document.querySelectorAll('.tab-button').forEach(btn => btn.style.display = 'inline-block');
+    }
+  </script>
 </body>
 </html>

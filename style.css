@@ -1,119 +1,100 @@
-/* Основные стили для body */
-body {
-  font-family: 'Arial', sans-serif;
+:root {
+  --primary: #007bff;
+  --primary-dark: #0056b3;
+  --background: #f9f9f9;
+  --text: #333;
+  --card-bg: #fff;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0; /* Светлый фон */
-  text-align: center; /* Центрируем весь текст на странице */
 }
 
-/* Контейнер для содержимого */
-.container {
-  width: 80%;
-  margin: 0 auto;
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: var(--background);
+  color: var(--text);
   padding: 20px;
-  background-color: #ffffff; /* Белый фон */
-  border-radius: 8px; /* Закругленные углы */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
-  margin-top: 40px; /* Отступ сверху */
 }
 
-/* Заголовок страницы */
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
 h1 {
-  font-size: 36px;
-  color: #333; /* Тёмно-серый цвет для текста */
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-/* Стили для кнопок-вкладок */
-.tabs {
-  display: flex;
-  justify-content: center; /* Центрируем кнопки по горизонтали */
+  text-align: center;
   margin-bottom: 30px;
 }
 
-/* Стили для каждой кнопки */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
 .tab-button {
-  padding: 15px 30px; /* Увеличиваем размер кнопок */
-  background-color: #007BFF;
-  color: white;
-  font-size: 18px;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 12px 20px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 0 15px; /* Отступы между кнопками */
-  border-radius: 5px; /* Скругление углов */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Плавный переход */
+  transition: background 0.3s, transform 0.2s;
+  font-size: 16px;
 }
 
-/* Эффект при наведении на кнопку */
 .tab-button:hover {
-  background-color: #0056b3; /* Меняем цвет при наведении */
-  transform: scale(1.1); /* Немного увеличиваем размер кнопки */
+  background-color: var(--primary-dark);
+  transform: scale(1.03);
 }
 
-/* Стили для контейнера списка мест */
 #places-list-container {
-  display: none;
-  text-align: center; /* Центрируем текст */
+  margin-top: 20px;
 }
 
-/* Стили для списка мест */
-#places-list {
-  list-style-type: none;
+ul#places-list {
+  list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 #places-list li {
-  background-color: #f9f9f9;
-  margin: 15px 0;
+  background: #f1f5ff;
+  margin: 10px 0;
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень для списка */
-  font-size: 18px;
-  color: #333;
-  transition: background-color 0.3s ease; /* Плавный переход */
+  border-radius: 10px;
+  box-shadow: var(--shadow);
 }
 
-#places-list li:hover {
-  background-color: #e6e6e6; /* Меняем фон при наведении */
-}
-
-/* Кнопка "Назад" */
 #back-button {
-  display: block;
-  margin: 20px auto;
-  padding: 15px 30px;
-  background-color: #28a745;
-  color: white;
-  font-size: 18px;
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #ccc;
+  color: #000;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  width: 200px; /* Ширина кнопки */
-  border-radius: 5px; /* Скругленные углы */
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s;
 }
 
-/* Эффект при наведении на кнопку "Назад" */
 #back-button:hover {
-  background-color: #218838; /* Меняем цвет при наведении */
-  transform: scale(1.1); /* Немного увеличиваем размер */
+  background-color: #aaa;
 }
 
-/* Дополнительные стили для мобильных устройств */
-@media (max-width: 768px) {
-  .container {
-    width: 90%; /* Уменьшаем ширину контейнера на мобильных устройствах */
-  }
-
-  .tab-button {
-    padding: 12px 20px; /* Уменьшаем размер кнопок */
-    font-size: 16px; /* Уменьшаем размер текста */
-  }
-
-  #back-button {
-    padding: 12px 20px;
-    font-size: 16px;
-  }
+#map {
+  height: 400px;
+  margin-top: 25px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
