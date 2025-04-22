@@ -1,10 +1,11 @@
 :root {
-  --primary: #007bff;
-  --primary-dark: #0056b3;
-  --background: #f9f9f9;
-  --text: #333;
-  --card-bg: #fff;
-  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  /* Цветовая схема в фисташковых тонах */
+  --primary: #8bc34a;         /* основной цвет – фисташковый */
+  --primary-dark: #6b9e3d;    /* тёмно‑фисташковый для наведения */
+  --background: #e8f5e9;      /* фон страницы – очень светлый фисташковый */
+  --text: #2e7d32;            /* текст – темно‑зеленый, приближенный к фисташковому */
+  --card-bg: #ffffff;         /* фон карточек – белый */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Тень для карточек */
 }
 
 * {
@@ -27,6 +28,7 @@ body {
   padding: 30px;
   border-radius: 16px;
   box-shadow: var(--shadow);
+  background-color: rgba(213, 231, 215, 0.95);
 }
 
 h1 {
@@ -68,7 +70,7 @@ ul#places-list {
 }
 
 #places-list li {
-  background: #f1f5ff;
+  background: var(--card-bg);
   margin: 10px 0;
   padding: 15px;
   border-radius: 10px;
@@ -79,8 +81,8 @@ ul#places-list {
   margin-top: 20px;
   display: inline-block;
   padding: 10px 18px;
-  background-color: #ccc;
-  color: #000;
+  background-color: #c5e1a5; /* светло‑фисташковый */
+  color: var(--text);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -88,7 +90,7 @@ ul#places-list {
 }
 
 #back-button:hover {
-  background-color: #aaa;
+  background-color: #aed581; /* немного темнее фисташковый */
 }
 
 #map {
@@ -97,6 +99,8 @@ ul#places-list {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  background-color: #e8f5e9;  /* светло-зеленый фон карты */
+  border: 2px solid #8bc34a;  /* рамка фисташкового цвета */
 }
 
 /* Панель с информацией */
@@ -106,21 +110,20 @@ ul#places-list {
   right: -300px; /* Изначально скрыта */
   width: 300px;
   height: 80%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(213, 231, 215, 0.95); /* светлый фисташковый полупрозрачный */
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  overflow-y: scroll;
-  transition: right 0.3s ease-in-out; /* Плавная анимация */
+  overflow-y: auto;
+  transition: right 0.3s ease-in-out;
 }
 
 #info-panel.open {
   right: 0;
 }
 
-
 #close-panel {
   background-color: #e57373;
-  color: white;
+  color: #fff;
   border: none;
   padding: 5px 10px;
   font-size: 16px;
@@ -132,4 +135,19 @@ ul#places-list {
 
 #close-panel:hover {
   background-color: #d32f2f;
+}
+
+/* Сохраняет переносы строк в тексте из place.info */
+#info-content .info-text {
+  white-space: pre-line;
+  margin: 0.5em 0;
+  line-height: 1.5;
+}
+
+/* Отступы и скругления для картинок в панели */
+#info-content img {
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+  border-radius: 8px;
 }

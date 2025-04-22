@@ -1,49 +1,82 @@
 const placesData = {
   sports: [
     {
-      name: "Skeittipuisto",
+      name: "Skeittipuisto Purple Park",
+      coords: [60.155687788123835, 24.93813230525286],
       description: "Loistava paikka skeittaukseen ja BMX-pyöräilyyn.",
-      coords: [60.192059, 24.945831],
-      images: ["images/skeittipuisto1.jpg", "images/skeittipuisto2.jpg"]
+      info: `
+Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto, joka sijaitsee Helsingin Eiran alueella, Merisatamanranta 10:ssä. Se avattiin uudistettuna heinäkuussa 2023, ja siitä on tullut suosittu paikka skeittareille, scootereille ja muille aktiivisille ulkoilmaurheilijoille.
+
+🛹 Puiston ominaisuudet:
+• Suunnittelu ja infrastruktuuri: Puisto on kunnostettu paikallisten skeittareiden toiveiden mukaisesti.  
+• Sijainti: Merinäköala, lähellä Sibelius-puistoa ja Meripuistoa.  
+• Yhteisö ja tuki: Paikalliset yrittäjät, kuten Makia, tukevat skeittauksen kulttuuria.
+
+📍 Kuinka päästä perille:
+Osoite: Merisatamanranta 10, 00150 Helsinki.  
+Julka: bussilla, raitiovaunulla tai kävellen nauttien merinäköalasta.
+      `,
+      images: [
+        "images/sport/skeittipuisto1.png",
+        "images/sport/skeittipuisto2.png",
+        "images/sport/skeittipuisto3.png",
+        "images/sport/skeittipuisto4.png"
+      ]
     },
     {
       name: "Urheilukeskus",
-      description: "Koripallo, lentopallo ja muuta liikuntaa.",
       coords: [60.185, 24.95],
-      images: ["images/urheilukeskus1.jpg", "images/urheilukeskus2.jpg"]
+      description: "Koripallo, lentopallo ja muuta liikuntaa.",
+      // Для него нет поля info, оно просто не будет показано
+      images: [
+        "images/urheilukeskus1.jpg",
+        "images/urheilukeskus2.jpg"
+      ]
     }
   ],
   food: [
     {
       name: "Italialainen ravintola",
-      description: "Pasta- ja pizzaherkkuja.",
       coords: [60.17, 24.94],
-      images: ["images/italian1.jpg", "images/italian2.jpg"]
+      description: "Pasta- ja pizzaherkkuja.",
+      images: [
+        "images/italian1.jpg",
+        "images/italian2.jpg"
+      ]
     },
     {
       name: "Kahvila ja jälkiruoat",
-      description: "Taivas herkkusuille.",
       coords: [60.175, 24.93],
-      images: ["images/cafe1.jpg", "images/cafe2.jpg"]
+      description: "Taivas herkkusuille.",
+      images: [
+        "images/cafe1.jpg",
+        "images/cafe2.jpg"
+      ]
     }
   ],
   culture: [
     {
       name: "Taidemuseo",
-      description: "Pysyvä taidenäyttely ja vaihtuvia näyttelyitä.",
       coords: [60.18, 24.95],
-      images: ["images/museum1.jpg", "images/museum2.jpg"]
+      description: "Pysyvä taidenäyttely ja vaihtuvia näyttelyitä.",
+      images: [
+        "images/museum1.jpg",
+        "images/museum2.jpg"
+      ]
     },
     {
       name: "Teatteri",
-      description: "Draamaa ja musiikkiesityksiä.",
       coords: [60.177, 24.96],
-      images: ["images/theater1.jpg", "images/theater2.jpg"]
+      description: "Draamaa ja musiikkiesityksiä.",
+      images: [
+        "images/theater1.jpg",
+        "images/theater2.jpg"
+      ]
     }
   ]
 };
 
-// Стартовая точка — Центр Хельсинки
+// Начальная точка — центр Хельсинки
 let userLocation = [60.171146471348436, 24.942693953733244];
 let map;
 let currentMarkers = [];
@@ -55,7 +88,10 @@ window.onload = () => {
     attribution: "© OpenStreetMap"
   }).addTo(map);
 
-  L.marker(userLocation).addTo(map).bindPopup("Helsingin keskusta").openPopup();
+  L.marker(userLocation)
+    .addTo(map)
+    .bindPopup("Helsingin keskusta")
+    .openPopup();
 };
 
 function getDistanceKm(lat1, lon1, lat2, lon2) {
@@ -74,19 +110,26 @@ function showPlaces(category) {
   document.getElementById("back-button").style.display = "inline-block";
   closePanel();
 
+  // Удаляем старые маркеры
   currentMarkers.forEach(marker => map.removeLayer(marker));
   currentMarkers = [];
 
+  // Фильтруем места по радиусу 15 км
   const nearbyPlaces = placesData[category].filter(place =>
-    getDistanceKm(userLocation[0], userLocation[1], place.coords[0], place.coords[1]) <= 15
+    getDistanceKm(
+      userLocation[0], userLocation[1],
+      place.coords[0], place.coords[1]
+    ) <= 15
   );
 
+  // Добавляем маркеры
   nearbyPlaces.forEach(place => {
     const marker = L.marker(place.coords).addTo(map);
     marker.on("click", () => showInfoPanel(place));
     currentMarkers.push(marker);
   });
 
+  // Переходим к первому маркеру
   if (nearbyPlaces.length) {
     map.setView(nearbyPlaces[0].coords, 13);
     setTimeout(() => map.invalidateSize(), 300);
@@ -97,12 +140,23 @@ function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
   const content = document.getElementById("info-content");
 
-  content.innerHTML = `
+  // Собираем HTML для информации
+  let html = `
     <h2>${place.name}</h2>
-    <p>${place.description}</p>
-    ${place.images.map(img => `<img src="${img}" alt="${place.name}" style="width: 100%; margin-top: 10px; border-radius: 8px;" />`).join("")}
+    <p><em>${place.description}</em></p>
   `;
 
+  // Если есть поле info — добавляем его с сохранением переносов
+  if (place.info) {
+    html += `<div class="info-text">${place.info.trim()}</div>`;
+  }
+
+  // Добавляем все картинки
+  html += place.images.map(img =>
+    `<img src="${img}" alt="${place.name}" />`
+  ).join("");
+
+  content.innerHTML = html;
   panel.classList.add("open");
 }
 
@@ -111,6 +165,7 @@ function closePanel() {
 }
 
 function goBack() {
+  // Удаляем маркеры и скрываем панель и кнопку
   currentMarkers.forEach(marker => map.removeLayer(marker));
   currentMarkers = [];
   document.getElementById("back-button").style.display = "none";
