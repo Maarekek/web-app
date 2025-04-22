@@ -43,24 +43,20 @@ const placesData = {
   ]
 };
 
-let userLocation = null;
+// Стартовая точка — Центр Хельсинки
+let userLocation = [60.171146471348436, 24.942693953733244];
 let map;
 let currentMarkers = [];
 
-navigator.geolocation.getCurrentPosition(
-  position => {
-    userLocation = [position.coords.latitude, position.coords.longitude];
-    map = L.map("map").setView(userLocation, 13);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap"
-    }).addTo(map);
+window.onload = () => {
+  map = L.map("map").setView(userLocation, 13);
 
-    L.marker(userLocation).addTo(map).bindPopup("Olet tässä").openPopup();
-  },
-  error => {
-    alert("Sijainnin hakeminen epäonnistui.");
-  }
-);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+  }).addTo(map);
+
+  L.marker(userLocation).addTo(map).bindPopup("Helsingin keskusta").openPopup();
+};
 
 function getDistanceKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -75,31 +71,24 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
 }
 
 function showPlaces(category) {
-  if (!userLocation) {
-    alert("Sijaintia ei ole saatu vielä.");
-    return;
-  }
-
-  document.getElementById("back-button").style.display = "block";
+  document.getElementById("back-button").style.display = "inline-block";
+  closePanel();
 
   currentMarkers.forEach(marker => map.removeLayer(marker));
   currentMarkers = [];
 
-  const places = placesData[category].filter(place => {
-    return getDistanceKm(
-      userLocation[0], userLocation[1],
-      place.coords[0], place.coords[1]
-    ) <= 15;
-  });
+  const nearbyPlaces = placesData[category].filter(place =>
+    getDistanceKm(userLocation[0], userLocation[1], place.coords[0], place.coords[1]) <= 15
+  );
 
-  places.forEach(place => {
+  nearbyPlaces.forEach(place => {
     const marker = L.marker(place.coords).addTo(map);
     marker.on("click", () => showInfoPanel(place));
     currentMarkers.push(marker);
   });
 
-  if (places.length) {
-    map.setView(places[0].coords, 13);
+  if (nearbyPlaces.length) {
+    map.setView(nearbyPlaces[0].coords, 13);
     setTimeout(() => map.invalidateSize(), 300);
   }
 }
@@ -107,16 +96,18 @@ function showPlaces(category) {
 function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
   const content = document.getElementById("info-content");
+
   content.innerHTML = `
     <h2>${place.name}</h2>
     <p>${place.description}</p>
-    ${place.images.map(img => `<img src="${img}" alt="${place.name}" />`).join("")}
+    ${place.images.map(img => `<img src="${img}" alt="${place.name}" style="width: 100%; margin-top: 10px; border-radius: 8px;" />`).join("")}
   `;
-  panel.classList.add("active");
+
+  panel.classList.add("open");
 }
 
 function closePanel() {
-  document.getElementById("info-panel").classList.remove("active");
+  document.getElementById("info-panel").classList.remove("open");
 }
 
 function goBack() {
