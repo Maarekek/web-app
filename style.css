@@ -125,12 +125,6 @@ ul#places-list {
   right: 0; /* Когда панель открыта, она появляется справа */
 }
 
-
-
-#info-panel.open {
-  right: 0;
-}
-
 #close-panel {
   background-color: #e57373;
   color: #fff;

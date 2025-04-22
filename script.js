@@ -27,7 +27,6 @@ Julka: bussilla, raitiovaunulla tai kävellen nauttien merinäköalasta.
       name: "Urheilukeskus",
       coords: [60.185, 24.95],
       description: "Koripallo, lentopallo ja muuta liikuntaa.",
-      // Для него нет поля info, оно просто не будет показано
       images: [
         "images/urheilukeskus1.jpg",
         "images/urheilukeskus2.jpg"
@@ -76,7 +75,6 @@ Julka: bussilla, raitiovaunulla tai kävellen nauttien merinäköalasta.
   ]
 };
 
-// Начальная точка — центр Хельсинки
 let userLocation = [60.171146471348436, 24.942693953733244];
 let map;
 let currentMarkers = [];
@@ -122,10 +120,17 @@ function showPlaces(category) {
     ) <= 15
   );
 
-  // Добавляем маркеры
+  // Добавляем маркеры с подсказками
   nearbyPlaces.forEach(place => {
     const marker = L.marker(place.coords).addTo(map);
-    marker.on("click", () => showInfoPanel(place));
+    marker.bindTooltip(`
+      <strong>${place.name}</strong><br>
+      ${place.description}
+    `, { permanent: true, direction: 'top', offset: [0, -15] });
+
+    // Открываем информационную панель при клике на маркер
+    marker.on('click', () => showInfoPanel(place));
+
     currentMarkers.push(marker);
   });
 
@@ -140,18 +145,15 @@ function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
   const content = document.getElementById("info-content");
 
-  // Собираем HTML для информации
   let html = `
     <h2>${place.name}</h2>
     <p><em>${place.description}</em></p>
   `;
 
-  // Если есть поле info — добавляем его с сохранением переносов
   if (place.info) {
     html += `<div class="info-text">${place.info.trim()}</div>`;
   }
 
-  // Добавляем все картинки
   html += place.images.map(img =>
     `<img src="${img}" alt="${place.name}" />`
   ).join("");
@@ -165,7 +167,6 @@ function closePanel() {
 }
 
 function goBack() {
-  // Удаляем маркеры и скрываем панель и кнопку
   currentMarkers.forEach(marker => map.removeLayer(marker));
   currentMarkers = [];
   document.getElementById("back-button").style.display = "none";
