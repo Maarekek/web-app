@@ -5,16 +5,17 @@ const placesData = {
       coords: [60.155687788123835, 24.93813230525286],
       description: "Loistava paikka skeittaukseen ja BMX-pyöräilyyn.",
       info: `
-Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto, joka sijaitsee Helsingin Eiran alueella, Merisatamanranta 10:ssä. Se avattiin uudistettuna heinäkuussa 2023, ja siitä on tullut suosittu paikka skeittareille, scootereille ja muille aktiivisille ulkoilmaurheilijoille.
+        Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto, joka sijaitsee Helsingin Eiran alueella, Merisatamanranta 10:ssä.
+        Se avattiin uudistettuna heinäkuussa 2023, ja siitä on tullut suosittu paikka skeittareille, scootereille ja muille aktiivisille ulkoilmaurheilijoille.
 
-🛹 Puiston ominaisuudet:
-• Suunnittelu ja infrastruktuuri: Puisto on kunnostettu paikallisten skeittareiden toiveiden mukaisesti.  
-• Sijainti: Merinäköala, lähellä Sibelius-puistoa ja Meripuistoa.  
-• Yhteisö ja tuki: Paikalliset yrittäjät, kuten Makia, tukevat skeittauksen kulttuuria.
+        🛹 Puiston ominaisuudet:
+        • Suunnittelu ja infrastruktuuri: Puisto on kunnostettu paikallisten skeittareiden toiveiden mukaisesti.
+        • Sijainti: Merinäköala, lähellä Sibelius-puistoa ja Meripuistoa.
+        • Yhteisö ja tuki: Paikalliset yrittäjät, kuten Makia, tukevat skeittauksen kulttuuria.
 
-📍 Kuinka päästä perille:
-Osoite: Merisatamanranta 10, 00150 Helsinki.  
-Julka: bussilla, raitiovaunulla tai kävellen nauttien merinäköalasta.
+        📍 Kuinka päästä perille:
+        Osoite: Merisatamanranta 10, 00150 Helsinki.
+        Julka: bussilla, raitiovaunulla tai kävellen nauttien merinäköalasta.
       `,
       images: [
         "images/sport/skeittipuisto1.png",
@@ -80,20 +81,24 @@ let map;
 let currentMarkers = [];
 
 window.onload = () => {
+  // Инициализация карты
   map = L.map("map").setView(userLocation, 13);
-
+  
+  // Добавление слоя карты
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(map);
-
+  
+  // Маркер для пользователя
   L.marker(userLocation)
     .addTo(map)
-    .bindPopup("Helsingin keskusta")
+    .bindPopup("<strong>Helsingin keskusta</strong>")
     .openPopup();
 };
 
+// Функция для вычисления расстояния между двумя точками
 function getDistanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
+  const R = 6371; // Радиус Земли в км
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
   const a =
@@ -104,6 +109,7 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// Функция для отображения мест на карте
 function showPlaces(category) {
   document.getElementById("back-button").style.display = "inline-block";
   closePanel();
@@ -114,13 +120,10 @@ function showPlaces(category) {
 
   // Фильтруем места по радиусу 15 км
   const nearbyPlaces = placesData[category].filter(place =>
-    getDistanceKm(
-      userLocation[0], userLocation[1],
-      place.coords[0], place.coords[1]
-    ) <= 15
+    getDistanceKm(userLocation[0], userLocation[1], place.coords[0], place.coords[1]) <= 15
   );
 
-  // Добавляем маркеры с подсказками
+  // Добавляем маркеры для каждого места
   nearbyPlaces.forEach(place => {
     const marker = L.marker(place.coords).addTo(map);
     marker.bindTooltip(`
@@ -128,19 +131,20 @@ function showPlaces(category) {
       ${place.description}
     `, { permanent: true, direction: 'top', offset: [0, -15] });
 
-    // Открываем информационную панель при клике на маркер
+    // Открытие информационной панели при клике
     marker.on('click', () => showInfoPanel(place));
 
     currentMarkers.push(marker);
   });
 
-  // Переходим к первому маркеру
+  // Центрируем карту на первом маркере
   if (nearbyPlaces.length) {
     map.setView(nearbyPlaces[0].coords, 13);
     setTimeout(() => map.invalidateSize(), 300);
   }
 }
 
+// Функция для отображения панели с информацией о месте
 function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
   const content = document.getElementById("info-content");
@@ -162,10 +166,12 @@ function showInfoPanel(place) {
   panel.classList.add("open");
 }
 
+// Функция для закрытия панели с информацией
 function closePanel() {
   document.getElementById("info-panel").classList.remove("open");
 }
 
+// Функция для возвращения на предыдущий экран
 function goBack() {
   currentMarkers.forEach(marker => map.removeLayer(marker));
   currentMarkers = [];
