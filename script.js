@@ -8,15 +8,59 @@ const placesData = {
         🛹 Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto Eirassa.
         📍 Osoite: Merisatamanranta 10, 00150 Helsinki.
       `,
-      images: ["images/sport/skeittipuisto1.png"]
+      images: [
+        "images/sport/skeittipuisto1.png",
+        "images/sport/skeittipuisto2.png",
+        "images/sport/skeittipuisto3.png",
+        "images/sport/skeittipuisto4.png"
+      ]
+    },
+    {
+      name: "Urheilukeskus",
+      coords: [60.185, 24.95],
+      description: "Koripallo, lentopallo ja muuta liikuntaa.",
+      images: [
+        "images/urheilukeskus1.png",
+        "images/urheilukeskus2.jpg"
+      ]
     }
   ],
   food: [
     {
-      name: "Italialainen ravintola",
-      coords: [60.17, 24.94],
-      description: "Pasta- ja pizzaherkkuja.",
-      images: ["images/italian1.jpg"]
+      name: "Ravintola Palace",
+      address: "Eteläranta 10, 00130 Helsinki",
+      coords: [60.1648, 24.9495],
+      description: "Rooftop Bar in Helsinki.",
+      telephone: "+358 9 1234567",
+      webpage: "https://www.ravintolapalace.fi/",
+      openingHours: "Ma-Pe 11-22, La 12-22, Su 12-20",
+      images: [
+        "images/palace.jpg"
+      ]
+    },
+    {
+      name: "Ravintola Brasa",
+      address: "Aleksanterinkatu 22, 00170 Helsinki",
+      coords: [60.173, 24.95],
+      description: "Ravintola - Bar - Terassi.",
+      telephone: "+358 9 6128 3000",
+      webpage: "https://www.brasa.fi/",
+      openingHours: "Ma-La 11-22, Su 12-20",
+      images: [
+        "images/Brasa.jpg"
+      ]
+    },
+    {
+      name: "Ravintola Emo",
+      address: "Kasarmikatu 44, 00130 Helsinki",
+      coords: [60.1634, 24.9481],
+      description: "Modern European cuisine with Nordic influences.",
+      telephone: "+358 9 6128 3000",
+      webpage: "https://www.emo.fi/",
+      openingHours: "Ma-La 11-22, Su fermé",
+      images: [
+        "images/emo.jpg"
+      ]
     }
   ],
   culture: [
@@ -29,6 +73,8 @@ const placesData = {
   ]
 };
 
+
+// dalwe idet baza karti (no delete) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 let userLocation = [60.1711, 24.9427];
 let map;
 let currentMarkers = [];
