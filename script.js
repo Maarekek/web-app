@@ -3,12 +3,29 @@ const placesData = {
     {
       name: "Skeittipuisto Purple Park",
       coords: [60.1557, 24.9381],
-      description: "Loistava paikka skeittaukseen ja BMX-pyöräilyyn.",
+      description: "Värikäs ja suosittu paikka skeittaukseen ja BMX-pyöräilyyn meren äärellä.",
       info: `
-        🛹 Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto Eirassa.
-        📍 Osoite: Merisatamanranta 10, 00150 Helsinki.
+        🛹 <strong>Ponke's Park</strong> (tunnetaan myös nimillä <em>Puple</em> ja <em>Kaivari</em>) on moderni katutyyliin keskittynyt skeittipuisto,
+        joka sijaitsee kauniilla paikalla Eiranrannassa Helsingissä.
+
+        📍 <strong>Osoite:</strong> Merisatamanranta 10, 00150 Helsinki
+
+        🔧 Puistosta löytyy:
+        – Matalia curbeja ja manuaalilaatikoita  
+        – Reilejä ja grindeihin sopivia pintoja  
+        – Pieni miniramppi ja tilaa luovalle skeittaukselle
+
+        🎨 Kirkkaan violetit pinnat tekevät puistosta uniikin ja houkuttelevan ajanviettopaikan erityisesti nuorille.
+
+        🌊 Sijainti meren äärellä tarjoaa upeat näkymät ja mukavan ilmapiirin niin skeittaukseen kuin rentoon oleskeluun.
+
+        ℹ️ Katso lisää: <a href="https://mevert.fi/ponkes-park/?utm_source=chatgpt.com" target="_blank">Mevertin esittelysivu</a>
       `,
-      images: ["images/sport/skeittipuisto1.png"]
+      images: [
+        "images/sport/skeittipuisto1.png",
+        "images/sport/skeittipuisto2.png",
+        "images/sport/skeittipuisto3.png"
+      ]
     }
   ],
   food: [
