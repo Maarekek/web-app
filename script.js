@@ -39,7 +39,9 @@ const placesData = {
         webpage: "https://www.ravintolapalace.fi/",
         openingHours: "Ma-Pe 11-22, La 12-22, Su 12-20",
         images: [
-          "images/palace3.jpg"
+          "images/food/PALACE/palace1.png",
+          "images/food/PALACE/palace2.png",
+          "images/food/PALACE/palace3.png",
         ]
       },
       {
@@ -54,7 +56,10 @@ const placesData = {
         webpage: "https://www.brasa.fi/",
         openingHours: "Ma-La 11-22, Su 12-20",
         images: [
-          "images/Food/Brasa1.jpg.png",
+          "images/food/BRASA/brasa1.png",
+          "images/food/BRASA/brasa2.png",
+          "images/food/BRASA/brasa3.png",
+          "images/food/BRASA/brasa4.png",
         ]
       },
       {
@@ -69,7 +74,9 @@ const placesData = {
         webpage: "https://www.emo.fi/",
         openingHours: "Ma-La 11-22, Su fermé",
         images: [
-          "images/Food/Emo2.jpg.png",
+          "images/Food/EMO/emo1.png",
+          "images/Food/EMO/emo2.png",
+          "images/Food/EMO/emo3.png",
         ]
       },
     ],
@@ -152,6 +159,20 @@ function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
   const content = document.getElementById("info-content");
 
+  // Если панель уже открыта, сначала закрыть её
+  if (panel.classList.contains("open")) {
+    panel.classList.remove("open");
+
+    // Подождать окончания анимации (должно совпадать с CSS transition-duration)
+    setTimeout(() => {
+      updatePanelContent(place, content, panel);
+    }, 300); // 300 мс как в transition
+  } else {
+    updatePanelContent(place, content, panel);
+  }
+}
+
+function updatePanelContent(place, content, panel) {
   let html = `<h2>${place.name}</h2><p><em>${place.description}</em></p>`;
   if (place.info) {
     html += `<p>${place.info}</p>`;
@@ -163,6 +184,7 @@ function showInfoPanel(place) {
   content.innerHTML = html;
   panel.classList.add("open");
 }
+
 
 // Функция для закрытия панели с информацией
 function closePanel() {
