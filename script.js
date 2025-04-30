@@ -28,47 +28,56 @@ const placesData = {
   food: [
     {
       name: "Ravintola Palace",
-      address: "Eteläranta 10, 00130 Helsinki",
       coords: [60.1648, 24.9495],
       description: "Rooftop Bar in Helsinki.",
+      info: `
+        🍽️ Ravintola Palace on yksi Helsingin tunnetuimmista ravintoloista, joka tarjoaa upeita merinäköaloja ja herkullista ruokaa.
+        📍 Osoite: Eteläranta 10, 00130 Helsinki.
+      `,
       telephone: "+358 9 1234567",
       webpage: "https://www.ravintolapalace.fi/",
       openingHours: "Ma-Pe 11-22, La 12-22, Su 12-20",
       images: [
-        "images/palace.jpg"
+        "images/palace3.jpg"
       ]
     },
     {
       name: "Ravintola Brasa",
-      address: "Aleksanterinkatu 22, 00170 Helsinki",
       coords: [60.173, 24.95],
       description: "Ravintola - Bar - Terassi.",
+      info : `
+        🍽️ Ravintola Brasa on tunnettu ravintola Helsingissä, joka tarjoaa herkullista ruokaa ja rentoa tunnelmaa n/.
+        📍 Osoite: Aleksanterinkatu 22, 00170 Helsinki.
+      `,
       telephone: "+358 9 6128 3000",
       webpage: "https://www.brasa.fi/",
       openingHours: "Ma-La 11-22, Su 12-20",
       images: [
-        "images/Brasa.jpg"
+        "images/Food/Brasa1.jpg.png",
       ]
     },
     {
       name: "Ravintola Emo",
-      address: "Kasarmikatu 44, 00130 Helsinki",
       coords: [60.1634, 24.9481],
       description: "Modern European cuisine with Nordic influences.",
+      info: `
+        🍽️ Ravintola Emo on moderni ravintola Helsingissä, joka tarjoaa herkullista eurooppalaista ruokaa pohjoismaisilla vaikutteilla.
+        📍 Osoite: Kasarmikatu 44, 00130 Helsinki.
+      `,
       telephone: "+358 9 6128 3000",
       webpage: "https://www.emo.fi/",
       openingHours: "Ma-La 11-22, Su fermé",
       images: [
-        "images/emo.jpg"
+        "images/Food/Emo2.jpg.png",
       ]
-    }
+    },
   ],
   culture: [
     {
       name: "Taidemuseo",
       coords: [60.18, 24.95],
       description: "Pysyvä taidenäyttely ja vaihtuvia näyttelyitä.",
-      images: ["images/museum1.jpg"]
+      images: ["images/culture/Brasa1.jpg.png"]
     }
   ]
 };
