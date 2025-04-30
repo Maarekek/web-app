@@ -9,22 +9,28 @@ const placesData = {
         📍 Osoite: Merisatamanranta 10, 00150 Helsinki.
       `,
       images: [
-        "images/sport/skeittipuisto1.png",
-        "images/sport/skeittipuisto2.png",
-        "images/sport/skeittipuisto3.png",
-        "images/sport/skeittipuisto4.png"
+        "images/sport/SKEITTIPUISTO/skeittipuisto1.png",
+        "images/sport/SKEITTIPUISTO/skeittipuisto2.png",
+        "images/sport/SKEITTIPUISTO/skeittipuisto3.png",
+        "images/sport/SKEITTIPUISTO/skeittipuisto4.png"
       ]
     },
     
       {
-        name: "Urheilukeskus",
-        coords: [60.185, 24.95],
+        name: "Tapanilan Urheilukeskus",
+        coords: [60.26549645872972, 25.017896680725002],
         description: "Koripallo, lentopallo ja muuta liikuntaa.",
+        info: `Tapanilan Urheilukeskus on yksi Suomen suurimmista urheilukeskuksista, tarjoten yli 80 eri aktiviteettia.
+        Voit harrastaa keilailua, kiipeilyä, jousiammuntaa ja jopa miekkailua.
+        Keskus houkuttelee vuosittain yli miljoona kävijää.
+        Alueella on kahvila, saunoja ja tiloja tapahtumille.
+        Täydellinen paikka perheille ja aktiiviseen vapaa-aikaan Helsingissä.`,
         images: [
-          "images/urheilukeskus1.png",
-          "images/urheilukeskus2.jpg"
+          "images/TAPANILANURHEILU/tapanilanurheilu1.png",
+          "images/TAPANILANURHEILU/tapanilanurheilu2.png",
+          "images/TAPANILANURHEILU/tapanilanurheilu3.png",
         ]
-      }
+      },
     ],
     food: [
       {
