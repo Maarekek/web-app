@@ -26,15 +26,6 @@ body {
   font-style: var(--h4-font-style); 
   font-family: var(--font-secondary); /* Вторичный шрифт для этих элементов */
   font-weight: lighter;
-  font-size: 16px;
-    --body-font-style: normal;
-    --body-font-family: var(--font-secondary);
-    --body-font-weight: 400;
-    --body-line-height: 1.8;
-    --body-m-font-size: 16px;
-    --body-letter-spacing: normal;
-    --body-text-transform: none;
-    --body-text-decoration: none;
 }
 
 .navbar {
