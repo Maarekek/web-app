@@ -83,6 +83,8 @@ const placesData = {
     ]
   };
 
+
+// dalwe idet baza karti (no delete) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 let userLocation = [60.1711, 24.9427];
 let map;
 let currentMarkers = [];
