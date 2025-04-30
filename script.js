@@ -5,8 +5,13 @@ const placesData = {
       coords: [60.1557, 24.9381],
       description: "Loistava paikka skeittaukseen ja BMX-pyöräilyyn.",
       info: `
-        🛹 Ponke's Park (tunnetaan myös nimellä Skeittipuisto) on moderni skeittipuisto Eirassa.
-        📍 Osoite: Merisatamanranta 10, 00150 Helsinki.
+          Ponke's Park on moderni skeittipuisto Eirassa.
+         Osoite: Merisatamanranta 10, 00150 Helsinki.
+        Skeittipuisto Purple Park on suosittu ulkoilupuisto skeittaajille ja BMX-harrastajille Helsingissä. 
+        Puisto tarjoaa modernit rampit ja esteet kaiken tasoisille käyttäjille. 
+        Se sijaitsee meren äärellä Eiranrannassa ja houkuttelee erityisesti nuoria liikkujia. 
+        Alueella on myös oleskelutiloja ja hyvä näkyvyys turvallisuuden takaamiseksi. 
+        Purple Park tunnetaan yhteisöllisestä ilmapiiristään ja urbaanista tunnelmastaan.
       `,
       images: [
         "images/sport/SKEITTIPUISTO/skeittipuisto1.png",
@@ -17,18 +22,23 @@ const placesData = {
     },
     
       {
-        name: "Tapanilan Urheilukeskus",
-        coords: [60.26549645872972, 25.017896680725002],
+        name: "Urhea Olympic Training Centre",
+        coords: [60.199772986942136, 24.949613799999998],
         description: "Koripallo, lentopallo ja muuta liikuntaa.",
-        info: `Tapanilan Urheilukeskus on yksi Suomen suurimmista urheilukeskuksista, tarjoten yli 80 eri aktiviteettia.
-        Voit harrastaa keilailua, kiipeilyä, jousiammuntaa ja jopa miekkailua.
-        Keskus houkuttelee vuosittain yli miljoona kävijää.
-        Alueella on kahvila, saunoja ja tiloja tapahtumille.
-        Täydellinen paikka perheille ja aktiiviseen vapaa-aikaan Helsingissä.`,
+        info: `
+          Urhea Olympic Training Centre on moderni huippu-urheilukeskus Kalliossa.
+          Osoite: Mäkelänkatu 47, 00550 Helsink
+        Urhea Olympiakoulutuskeskus on moderni urheilukeskus Helsingissä, joka tarjoaa huippuluokan valmennus- ja harjoitusmahdollisuuksia. 
+        Keskus palvelee olympiaurheilijoita ja muita huippu-urheilijoita eri lajien valmennuksessa. 
+        Tilat sisältävät mm. kuntosaleja, uintialtaan ja monipuoliset harjoitustilat. 
+        Urhealla on myös edistykselliset urheilulääketieteelliset palvelut ja asiantunteva henkilökunta.
+         Se on keskeinen osa Suomen urheilujärjestelmää ja tukee urheilijoiden kansainvälistä menestystä.`,
         images: [
-          "images/TAPANILANURHEILU/tapanilanurheilu1.png",
-          "images/TAPANILANURHEILU/tapanilanurheilu2.png",
-          "images/TAPANILANURHEILU/tapanilanurheilu3.png",
+          "images/sport/OLYMPIC/olympic1.png",
+          "images/sport/OLYMPIC/olympic2.png",
+          "images/sport/OLYMPIC/olympic3.png",
+          "images/sport/OLYMPIC/olympic4.png",
+          
         ]
       },
     ],
@@ -109,11 +119,6 @@ window.onload = () => {
     attribution: "© OpenStreetMap"
   }).addTo(map);
 
-  L.marker(userLocation)
-    .addTo(map)
-    .bindPopup("<strong>Helsingin keskusta</strong>")
-    .openPopup();
-
   document.querySelectorAll("button[data-category]").forEach(btn => {
     btn.addEventListener("click", () => {
       const category = btn.getAttribute("data-category");
@@ -144,6 +149,8 @@ function showPlaces(category) {
     getDistanceKm(userLocation[0], userLocation[1], place.coords[0], place.coords[1]) <= 15
   );
 
+  const bounds = [];
+
   nearbyPlaces.forEach(place => {
     const marker = L.marker(place.coords).addTo(map);
     marker.bindTooltip(`<strong>${place.name}</strong><br>${place.description}`, {
@@ -153,13 +160,15 @@ function showPlaces(category) {
     });
     marker.on('click', () => showInfoPanel(place));
     currentMarkers.push(marker);
+    bounds.push(place.coords); // добавляем координаты для fitBounds
   });
 
-  if (nearbyPlaces.length) {
-    map.setView(nearbyPlaces[0].coords, 13);
+  if (bounds.length > 0) {
+    map.fitBounds(bounds, { padding: [50, 50] });
     setTimeout(() => map.invalidateSize(), 300);
   }
 }
+
 
 function showInfoPanel(place) {
   const panel = document.getElementById("info-panel");
@@ -190,6 +199,86 @@ function updatePanelContent(place, content, panel) {
   content.innerHTML = html;
   panel.classList.add("open");
 }
+// Флаг для отслеживания состояния панели (открыта или нет)
+let isPanelOpen = false;
+
+function updatePanelContent(place, content, panel) {
+  let html = `<h2>${place.name}</h2><p><em>${place.description}</em></p>`;
+  if (place.info) {
+    html += `<p>${place.info}</p>`;
+  }
+  if (place.images) {
+    html += place.images.map(img => `<img src="${img}" alt="${place.name}" />`).join("");
+  }
+
+  content.innerHTML = html;
+  panel.classList.add("open");
+  isPanelOpen = true; // Панель открыта
+}
+
+// Закрыть панель
+function closePanel() {
+  document.getElementById("info-panel").classList.remove("open");
+  isPanelOpen = false; // Панель закрыта
+}
+
+// Обработчик кликов по документу
+document.addEventListener("click", function (event) {
+  const panel = document.getElementById("info-panel");
+  const isClickInsidePanel = panel.contains(event.target);
+  const isClickOnMarker = event.target.closest(".leaflet-marker-icon"); // Проверка клика по маркеру
+
+  // Если панель открыта и клик был не по маркеру и не по панели, закрыть панель
+  if (isPanelOpen && !isClickInsidePanel && !isClickOnMarker) {
+    closePanel();
+  }
+});
+
+// Обработчик кликов по маркерам
+function showInfoPanel(place) {
+  const panel = document.getElementById("info-panel");
+  const content = document.getElementById("info-content");
+
+  // Если панель уже открыта, сначала закроем её, а затем откроем снова с новым контентом
+  if (panel.classList.contains("open")) {
+    closePanel();
+    setTimeout(() => {
+      updatePanelContent(place, content, panel);
+    }, 300); // Задержка для анимации закрытия
+  } else {
+    updatePanelContent(place, content, panel);
+  }
+}
+
+// Пример того, как на маркеры добавляются обработчики
+function showPlaces(category) {
+  document.getElementById("back-button").style.display = "inline-block";
+  closePanel();
+
+  currentMarkers.forEach(marker => map.removeLayer(marker));
+  currentMarkers = [];
+
+  const nearbyPlaces = placesData[category].filter(place =>
+    getDistanceKm(userLocation[0], userLocation[1], place.coords[0], place.coords[1]) <= 15
+  );
+
+  nearbyPlaces.forEach(place => {
+    const marker = L.marker(place.coords).addTo(map);
+    marker.bindTooltip(`<strong>${place.name}</strong><br>${place.description}`, {
+      permanent: true,
+      direction: 'top',
+      offset: [0, -15]
+    });
+    marker.on('click', () => showInfoPanel(place));
+    currentMarkers.push(marker);
+  });
+
+  if (nearbyPlaces.length) {
+    map.setView(nearbyPlaces[0].coords, 13);
+    setTimeout(() => map.invalidateSize(), 300);
+  }
+}
+
 
 
 // Функция для закрытия панели с информацией

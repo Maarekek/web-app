@@ -105,17 +105,6 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-#back-button {
-  margin: 20px auto;
-  display: none;
-  padding: 10px 20px;
-  background: var(--olive);
-  color: var(--white);
-  border: none;
-  cursor: pointer;
-  display: block;
-}
-
 /* Панель с информацией */
 #info-panel {
   position: fixed;
@@ -148,6 +137,10 @@ body {
 
 /* Кнопка закрытия */
 #close-panel-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
   background: transparent;
   color: white;
   border: 2px solid white;
@@ -155,8 +148,7 @@ body {
   font-size: 0.9rem;
   letter-spacing: 1px;
   cursor: pointer;
-  margin-top: 5px;
-  font-style: var(--h4-font-style); /* Применяем стиль шрифта */
+  font-style: var(--h4-font-style);
   transition: background-color 0.3s ease;
 }
 
