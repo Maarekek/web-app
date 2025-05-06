@@ -98,13 +98,22 @@ const placesData = {
     ],
     culture: [
       {
-        name: "Taidemuseo",
-        coords: [60.18, 24.95],
+        name: "Art Museum Ateneum",
+        coords: [60.170249993878514, 24.94407921349342],
         description: "Pysyvä taidenäyttely ja vaihtuvia näyttelyitä.",
-        images: ["images/culture/Brasa1.jpg.png"]
-      }
-    ]
-  };
+        info: `Ateneum is an art museum in Helsinki, Finland and one of the three museums forming the Finnish National Gallery.
+        It is located in the centre of Helsinki on the south side of Rautatientori square close to Helsinki Central railway station. 
+        It has the biggest collections of classical art in Finland.`,
+        images: ["images/culture/ATENEUM/ateneum1.png",
+        "images/culture/ATENEUM/ateneum2.png",
+        "images/culture/ATENEUM/ateneum3.png",
+        "images/culture/ATENEUM/ateneum4.png",
+        "images/culture/ATENEUM/ateneum5.png",
+      ]
+    },
+  ],
+};
+
 
 
 // dalwe idet baza karti (no delete) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
