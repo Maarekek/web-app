@@ -111,6 +111,20 @@ const placesData = {
         "images/culture/ATENEUM/ateneum5.png",
       ]
     },
+    {
+      name: "Paradox Museum",
+        coords: [60.16855385825461, 24.94956917116448],
+        description: "Pysyvä taidenäyttely ja vaihtuvia näyttelyitä.",
+        info: `Paradox Museum Helsinki on interaktiivinen näyttelytila, jossa yli 40 käden kosketeltavaa teosta vievät kävijän tutkimaan havaintoihin, illuusioihin ja paradokseihin liittyviä ilmiöitä.
+         Museo sopii kaikenikäisille ja yhdistelee viihdyttäviä sekä opetuksellisia elementtejä, jotka stimuloivat sekä mielikuvitusta että kriittistä ajattelua.
+          Vierailijat voivat tutkia optisia harhoja, osallistua aktivoiviin installaatioihin ja ottaa vaikuttavia valokuvia ainutlaatuisten perspektiivien keskellä.
+           Paradox Museum Helsinki tarjoaa unohtumattoman kokemuksen, jossa todellisuuden ja illuusion rajat hämärtyvät ja mielen normit haastetaan.`,
+        images: ["images/culture/PARADOX/paradox1.png",
+        "images/culture/PARADOX/paradox2.png",
+        "images/culture/PARADOX/paradox3.png",
+        "images/culture/PARADOX/paradox4.png",
+      ]
+    },
   ],
 };
 
@@ -128,12 +142,46 @@ window.onload = () => {
     attribution: "© OpenStreetMap"
   }).addTo(map);
 
-  document.querySelectorAll("button[data-category]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const category = btn.getAttribute("data-category");
-      showPlaces(category);
-    });
+// Функция плавной прокрутки с настраиваемой длительностью
+function smoothScrollTo(targetY, duration = 1000) {
+  const startY = window.pageYOffset;
+  const distance = targetY - startY;
+  let startTime = null;
+
+
+  function easeInOutQuad(t, b, c, d) {
+    t /= d/2;
+    if (t < 1) return c/2*t*t + b;
+    t--;
+    return -c/2 * (t*(t-2) - 1) + b;
+  }
+
+  function animation(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const nextY = easeInOutQuad(timeElapsed, startY, distance, duration);
+    window.scrollTo(0, nextY);
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  }
+
+  requestAnimationFrame(animation);
+}
+
+document.querySelectorAll("button[data-category]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const category = btn.getAttribute("data-category");
+    showPlaces(category);
+
+    const mapEl = document.getElementById("map");
+    const offset = -50; 
+    const targetY = mapEl.getBoundingClientRect().top + window.pageYOffset + offset;
+
+    smoothScrollTo(targetY, 1000);
   });
+});
+
 };
 
 function getDistanceKm(lat1, lon1, lat2, lon2) {
@@ -297,3 +345,75 @@ function closePanel() {
 
 // Назначаем действие кнопке закрытия
 document.getElementById("close-panel-btn").addEventListener("click", closePanel);
+
+
+// Rekisteröityminen
+async function signUp(email, password, name, age) {
+  const { user, error } = await supabase.auth.signUp({
+      email: email,
+      password: password
+  });
+
+  if (error) {
+      console.error("Rekisteröintivirhe: ", error.message);
+      return;
+  }
+
+  const { data, error: profileError } = await supabase
+      .from('user_profiles')
+      .insert([
+          {
+              user_id: user.id,
+              name: name,
+              age: age
+          }
+      ]);
+
+  if (profileError) {
+      console.error("Virhe profiilia lisättäessä: ", profileError.message);
+  } else {
+      console.log("Profiili lisätty: ", data);
+      window.location.href = 'dashboard.html';
+  }
+}
+
+// Kirjautuminen
+async function signIn(email, password) {
+  const { user, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+  });
+
+  if (error) {
+      console.error("Kirjautumisvirhe: ", error.message);
+      return;
+  }
+
+  console.log("Kirjauduttu sisään: ", user);
+  window.location.href = 'dashboard.html';
+}
+
+// Rekisteröitymispainike
+const signUpBtn = document.getElementById('sign-up-btn');
+if (signUpBtn) {
+  signUpBtn.addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+
+      signUp(email, password, name, age);
+  });
+}
+
+// Kirjautumispainike
+const signInBtn = document.getElementById('sign-in-btn');
+if (signInBtn) {
+  signInBtn.addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signIn(email, password);
+  });
+}
+

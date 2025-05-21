@@ -1,0 +1,126 @@
+:root {
+    --bg: #dfe5e0;
+    --olive: #4c543d;
+    --text: #2f2f2f;
+    --white: #fff;
+    --font-primary: 'Arial', sans-serif;
+    --font-secondary: 'Georgia', serif;
+    --btn-hover: #3e4a36;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  header.navbar {
+    width: 100%;
+    background-color: var(--olive);
+    color: var(--white);
+    padding: 15px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: var(--font-secondary);
+  }
+  
+  header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  header nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 1rem;
+  }
+  
+  main.container {
+    margin-top: 120px;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  main h2 {
+    text-align: center;
+    color: var(--olive);
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    font-family: var(--font-secondary);
+  }
+  
+  main input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  main button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--olive);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  main button:hover {
+    background-color: var(--btn-hover);
+  }
+  
+  main p {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  main a {
+    color: var(--olive);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  
+  footer p {
+    font-family: var(--font-secondary);
+    color: var(--olive);
+  }
+  

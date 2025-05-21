@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kirjaudu sisään</title>
+  <link rel="stylesheet" href="sign-in.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Vapaa-Aikaa</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Etusivu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main class="container">
+    <h2>Kirjaudu sisään</h2>
+    <input type="email" id="email" placeholder="Sähköposti" />
+    <input type="password" id="password" placeholder="Salasana" />
+    <button onclick="signIn()">Kirjaudu</button>
+    <p>Eikö sinulla ole tiliä? <a href="sign-up.html">Luo tili</a></p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Vapaa-Aikaa</p>
+  </footer>
+
+  <script src="sign-in.js"></script>
+</body>
+</html>

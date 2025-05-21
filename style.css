@@ -6,6 +6,8 @@
 
   --h4-font-style: normal; /* Стиль шрифта (italic, oblique, normal) */
   font-weight: lighter;
+    --font-primary: 'Arial', sans-serif;
+    --font-secondary: 'Georgia', serif;
 }
 
 body {

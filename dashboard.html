@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oma tili</title>
+</head>
+<body>
+
+    <h1>Tervetuloa, <span id="user-name"></span></h1>
+    <p>Sähköpostisi: <span id="user-email"></span></p>
+    
+    <button id="sign-out-btn">Kirjaudu ulos</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        // Tarkistetaan onko käyttäjä kirjautunut
+        const user = supabase.auth.user();
+        if (user) {
+            document.getElementById('user-name').textContent = user.email;
+            document.getElementById('user-email').textContent = user.email;
+        } else {
+            window.location.href = '/sign-in.html';
+        }
+
+        // Kirjaudu ulos
+        document.getElementById('sign-out-btn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/sign-in.html';
+        });
+    </script>
+
+</body>
+</html>
