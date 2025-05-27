@@ -158,3 +158,12 @@ body {
   background-color: white;
   color: #2d4028;
 }
+.lang-btn {
+  margin-left: 15px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #587562;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}

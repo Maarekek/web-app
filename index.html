@@ -17,23 +17,24 @@
         <a href="tietoa.html">Tietoa</a>
         <a href="Yhteystiedot.html">Yhteystiedot</a>
         <li><a href="sign-in.html" class="login-button">Kirjaudu</a></li>
+        <button id="lang-toggle" class="lang-btn">EN</button>
       </ul>
     </nav>
   </header>
 
   <main class="cards-section">
     <div class="card">
-      <img src="images/front/sport.jpg" alt="Sport" />
+      <img src="images/front/sport.jpg" alt="URHEILU" />
       <h2>SPORT</h2>
       <button data-category="sports">SEARCH PLACES</button>
     </div>
     <div class="card">
-      <img src="images/front/culture.jpg" alt="Culture" />
+      <img src="images/front/culture.jpg" alt="KULTTUURI" />
       <h2>CULTURE</h2>
       <button data-category="culture">SEARCH PLACES</button>
     </div>
     <div class="card">
-      <img src="images/front/food.jpeg" alt="Food" />
+      <img src="images/front/food.jpeg" alt="RUOKA" />
       <h2>FOOD</h2>
       <button data-category="food">SEARCH PLACES</button>
     </div>
@@ -49,5 +50,64 @@
   
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
+  <script>
+    const translations = {
+      en: {
+        search: "SEARCH PLACES",
+        sport: "SPORT",
+        culture: "CULTURE",
+        food: "FOOD",
+        login: "Login",
+        about: "About",
+        contact: "Contact",
+        back: "← Back",
+        close: "CLOSE"
+      },
+      fi: {
+        search: "HAE PAIKKOJA",
+        sport: "URHEILU",
+        culture: "KULTTUURI",
+        food: "RUOKA",
+        login: "Kirjaudu",
+        about: "Tietoa",
+        contact: "Yhteystiedot",
+        back: "← Takaisin",
+        close: "SULJE"
+      }
+    };
+  
+    let currentLang = "en";
+  
+    function updateLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll(".card").forEach((card, index) => {
+        const keys = ["sport", "culture", "food"];
+        card.querySelector("h2").textContent = translations[lang][keys[index]];
+        card.querySelector("button").textContent = translations[lang].search;
+      });
+  
+      document.querySelector(".login-button").textContent = translations[lang].login;
+      document.querySelector("#back-button").textContent = translations[lang].back;
+      document.querySelector("#close-panel-btn").textContent = translations[lang].close;
+  
+      // Навигация
+      const navLinks = document.querySelectorAll("nav a");
+      navLinks[0].textContent = translations[lang].about;
+      navLinks[1].textContent = translations[lang].contact;
+  
+      // Обновляем текст кнопки
+      document.getElementById("lang-toggle").textContent = lang === "en" ? "FI" : "EN";
+    }
+  
+    document.getElementById("lang-toggle").addEventListener("click", () => {
+      const newLang = currentLang === "en" ? "fi" : "en";
+      updateLanguage(newLang);
+    });
+  
+    window.addEventListener("DOMContentLoaded", () => {
+      updateLanguage(currentLang);
+    });
+  </script>
+  
 </body>
 </html>

@@ -127,9 +127,17 @@ const placesData = {
     },
   ],
 };
+// Определяем текущий язык пользователя
+function detectLanguage() {
+  const lang = navigator.language || navigator.userLanguage;
+  if (lang.startsWith('fi')) {
+    return 'fi';
+  }
+  // Можно расширить на другие языки, но по задаче — по умолчанию en
+  return 'en';
+}
 
-
-
+let currentLang = detectLanguage();
 // dalwe idet baza karti (no delete) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 let userLocation = [60.1711, 24.9427];
 let map;
